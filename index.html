@@ -1,106 +1,74 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>Blog Asta</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
     body {
-      margin: 0;
-      padding: 60px 40px;
+      font-family: "Sora", sans-serif;
       background: transparent;
-      font-family: 'sora', sans-serif;
       color: #144660;
+      margin: 0;
+      padding: 40px;
     }
-
     .container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-      gap: 48px;
-      max-width: 1400px;
-      margin: auto;
-    }
-
-    .post {
       display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 40px;
+      justify-content: center;
     }
-
+    .post {
+      background: transparent;
+      width: 320px;
+      border-radius: 16px;
+      overflow: hidden;
+    }
     .post img {
       width: 100%;
-      height: 220px;
-      object-fit: cover;
-      border-radius: 16px;
-      margin: 24px 0;
+      border-radius: 12px;
+      margin-bottom: 16px;
     }
-
     .post h2 {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 700;
-      margin: 0;
+      margin: 0 0 12px;
       color: #144660;
     }
-
-    .post p {
-      font-size: 16px;
-      line-height: 1.6;
-      margin: 0;
-      color: #144660;
-    }
-
     .post .date {
       font-size: 14px;
-      margin-bottom: 12px;
       color: #829182;
-      font-weight: 400;
+      margin-bottom: 8px;
     }
-
-    .post a {
-      text-decoration: none;
+    .post p {
+      font-size: 16px;
+      line-height: 1.5;
       color: #144660;
-    }
-
-    @media (max-width: 768px) {
-      body {
-        padding: 40px 20px;
-      }
     }
   </style>
 </head>
 <body>
-  <div class="container" id="posts"></div>
+  <div class="container" id="rss-feed"></div>
 
   <script>
-    async function fetchRSS() {
-      const response = await fetch("https://api.rss2json.com/v1/api.json?rss_url=https://astaseguros.wordpress.com/feed/");
-      const data = await response.json();
-      const posts = data.items.slice(0, 6);
-      const container = document.getElementById("posts");
-
-      posts.forEach(post => {
-        const postEl = document.createElement("div");
-        postEl.className = "post";
-
-        const date = new Date(post.pubDate).toLocaleDateString("pt-BR", {
-          day: "2-digit", month: "long", year: "numeric"
+    fetch("https://api.rss2json.com/v1/api.json?rss_url=https://rss.app/feeds/RTVdt836874WgeSC.xml")
+      .then(response => response.json())
+      .then(data => {
+        const container = document.getElementById("rss-feed");
+        data.items.forEach(item => {
+          const post = document.createElement("div");
+          post.className = "post";
+          post.innerHTML = `
+            <div class="date">${new Date(item.pubDate).toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' })}</div>
+            <h2>${item.title}</h2>
+            ${item.enclosure?.link ? `<img src="${item.enclosure.link}" alt="${item.title}">` : ''}
+            <p>${item.description.split(" ").slice(0, 30).join(" ")}...</p>
+          `;
+          container.appendChild(post);
         });
-
-        const imgMatch = post.content.match(/<img[^>]+src="([^">]+)"/);
-        const imageUrl = imgMatch ? imgMatch[1] : '';
-
-        postEl.innerHTML = `
-          <div class="date">${date}</div>
-          <h2><a href="${post.link}" target="_blank">${post.title}</a></h2>
-          ${imageUrl ? `<img src="${imageUrl}" alt="${post.title}">` : ""}
-          <p>${post.description.split(" ").slice(0, 40).join(" ")}...</p>
-        `;
-
-        container.appendChild(postEl);
       });
-    }
-
-    fetchRSS();
   </script>
 </body>
 </html>
