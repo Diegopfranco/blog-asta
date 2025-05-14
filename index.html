@@ -94,13 +94,14 @@
         const imgMatch = content.match(/<img[^>]+src="([^">]+)"/);
         const imageUrl = imgMatch ? imgMatch[1] : "";
 
-        const summary = post.description.replace(/<[^>]*>?/gm, "").slice(0, 180) + "...";
+        const summaryText = post.description.replace(/<[^>]*>?/gm, "").trim();
+        const shortText = summaryText.length > 180 ? summaryText.slice(0, 60) + "…" : summaryText;
 
         article.innerHTML = `
           <time>${dataPub}</time>
           <h2>${post.title}</h2>
           ${imageUrl ? `<img src="${imageUrl}" alt="Imagem do post">` : ""}
-          <p>${summary}</p>
+          <p>${shortText}</p>
         `;
 
         container.appendChild(article);
