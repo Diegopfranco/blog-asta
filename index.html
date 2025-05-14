@@ -4,7 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Blog Asta</title>
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Fonte Sora do Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+
   <style>
     body {
       margin: 0;
@@ -14,73 +17,83 @@
       color: #144660;
     }
 
-    .posts {
+    .blog-container {
       display: flex;
-      gap: 40px;
       flex-wrap: wrap;
+      gap: 40px;
       justify-content: center;
+      align-items: flex-start; /* alinha os cards pelo topo */
     }
 
     .post {
-      flex: 1 1 300px;
-      max-width: 340px;
+      width: 320px;
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
     }
 
     .post-date {
-      font-size: 0.9rem;
+      font-size: 14px;
       color: #829182;
-      font-weight: 400;
-      margin-bottom: 0.5rem;
+      margin-bottom: 4px;
     }
 
     .post-title {
-      font-size: 1.3rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      min-height: 72px; /* força todos os títulos a ocupar no mínimo 2 linhas */
+      line-height: 1.4;
     }
 
     .post-image {
       width: 100%;
-      border-radius: 12px;
-      margin-bottom: 1rem;
+      height: auto;
+      border-radius: 16px;
+      margin-bottom: 16px;
     }
 
-    .post-preview {
-      font-size: 1rem;
+    .post-excerpt {
+      font-size: 16px;
       font-weight: 400;
       line-height: 1.6;
       color: #144660;
     }
+
+    @media (max-width: 960px) {
+      .blog-container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .post {
+        width: 100%;
+        max-width: 400px;
+      }
+    }
   </style>
 </head>
+
 <body>
-  <div class="posts">
+  <div class="blog-container">
     <div class="post">
       <div class="post-date">14 de maio de 2025</div>
       <div class="post-title">Técnicas de Respiração: para Gerenciar Emoções e Reduzir o Estresse</div>
-      <img class="post-image" src="https://images.unsplash.com/photo-1616627989394-224d797b1dc6" alt="respiração" />
-      <p class="post-preview">
-        Técnicas de respiração simples ajudam a reduzir o estresse e melhorar o foco no dia a dia.
-      </p>
+      <img class="post-image" src="https://astaseguros.files.wordpress.com/2024/12/yoga-1.jpg" alt="Post 1">
+      <div class="post-excerpt">Você sabia que a respiração pode ser uma aliada poderosa na busca por equilíbrio emocional? Muitas vezes, esquecemos que esse ato tão simples pode influenciar nosso estado mental...</div>
     </div>
+
     <div class="post">
       <div class="post-date">13 de maio de 2025</div>
       <div class="post-title">Livros que Ajudam a Compreender e Cuidar da Saúde Mental</div>
-      <img class="post-image" src="https://images.unsplash.com/photo-1607746882042-944635dfe10e" alt="livros" />
-      <p class="post-preview">
-        Leituras que inspiram autocuidado e ajudam a entender melhor as emoções e os limites pessoais.
-      </p>
+      <img class="post-image" src="https://astaseguros.files.wordpress.com/2024/12/livros.jpg" alt="Post 2">
+      <div class="post-excerpt">Você já parou para pensar em como a leitura pode ser uma aliada poderosa na nossa jornada de autoconhecimento e cuidado com a saúde mental? Às vezes, tudo o que precisamos é de um bom livro...</div>
     </div>
+
     <div class="post">
       <div class="post-date">13 de maio de 2025</div>
       <div class="post-title">Não precisa estar tudo bem o tempo todo.</div>
-      <img class="post-image" src="https://images.unsplash.com/photo-1607746882042-944635dfe10e" alt="emoções" />
-      <p class="post-preview">
-        Nem sempre estaremos bem — e tudo bem com isso. Aprender a acolher os sentimentos é essencial.
-      </p>
+      <img class="post-image" src="https://astaseguros.files.wordpress.com/2024/12/mulher.jpg" alt="Post 3">
+      <div class="post-excerpt">Opa, e aí tudo bem? Quantas vezes por dia respondemos a essa pergunta de maneira automática sem ao menos nos perguntarmos se estamos bem mesmo? Vivemos em uma época em que estar bem virou...</div>
     </div>
   </div>
 </body>
