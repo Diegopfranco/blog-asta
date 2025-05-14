@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -96,7 +94,7 @@
         const imgMatch = content.match(/<img[^>]+src="([^">]+)"/);
         const imageUrl = imgMatch ? imgMatch[1] : "";
 
-        const summary = post.description.replace(/<[^>]*>?/gm, "").slice(0, 180) + "...";
+        const summary = post.description.replace(/<[^>]*>?/gm, "").slice(0, 60) + "...";
 
         article.innerHTML = `
           <time>${dataPub}</time>
