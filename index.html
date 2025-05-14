@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -94,14 +96,13 @@
         const imgMatch = content.match(/<img[^>]+src="([^">]+)"/);
         const imageUrl = imgMatch ? imgMatch[1] : "";
 
-        const summaryText = post.description.replace(/<[^>]*>?/gm, "").trim();
-        const shortText = summaryText.length > 180 ? summaryText.slice(0, 60) + "…" : summaryText;
+        const summary = post.description.replace(/<[^>]*>?/gm, "").slice(0, 180) + "...";
 
         article.innerHTML = `
           <time>${dataPub}</time>
           <h2>${post.title}</h2>
           ${imageUrl ? `<img src="${imageUrl}" alt="Imagem do post">` : ""}
-          <p>${shortText}</p>
+          <p>${summary}</p>
         `;
 
         container.appendChild(article);
