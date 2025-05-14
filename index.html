@@ -1,53 +1,70 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog Asta Widget</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blog Asta</title>
   <style>
     body {
       margin: 0;
+      padding: 60px 40px;
       background: transparent;
-      font-family: 'Sora', sans-serif;
+      font-family: 'sora', sans-serif;
       color: #144660;
     }
+
     .container {
-      display: flex;
-      flex-direction: column;
-      gap: 40px;
-      padding: 40px;
-      max-width: 900px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 48px;
+      max-width: 1400px;
       margin: auto;
     }
+
     .post {
-      border-bottom: 1px solid #82918233;
-      padding-bottom: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
+
     .post img {
       width: 100%;
-      max-height: 300px;
+      height: 220px;
       object-fit: cover;
-      border-radius: 12px;
-      margin: 20px 0;
+      border-radius: 16px;
+      margin: 24px 0;
     }
+
     .post h2 {
-      font-size: 28px;
-      margin: 0 0 8px;
+      font-size: 22px;
+      font-weight: 700;
+      margin: 0;
       color: #144660;
     }
-    .post .date {
-      font-size: 14px;
-      color: #829182;
-      margin-bottom: 12px;
-    }
+
     .post p {
       font-size: 16px;
       line-height: 1.6;
+      margin: 0;
       color: #144660;
     }
+
+    .post .date {
+      font-size: 14px;
+      margin-bottom: 12px;
+      color: #829182;
+      font-weight: 400;
+    }
+
     .post a {
       text-decoration: none;
       color: #144660;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 40px 20px;
+      }
     }
   </style>
 </head>
@@ -58,9 +75,9 @@
     async function fetchRSS() {
       const response = await fetch("https://api.rss2json.com/v1/api.json?rss_url=https://astaseguros.wordpress.com/feed/");
       const data = await response.json();
-      const posts = data.items.slice(0, 5);
-
+      const posts = data.items.slice(0, 6);
       const container = document.getElementById("posts");
+
       posts.forEach(post => {
         const postEl = document.createElement("div");
         postEl.className = "post";
@@ -69,10 +86,13 @@
           day: "2-digit", month: "long", year: "numeric"
         });
 
+        const imgMatch = post.content.match(/<img[^>]+src="([^">]+)"/);
+        const imageUrl = imgMatch ? imgMatch[1] : '';
+
         postEl.innerHTML = `
           <div class="date">${date}</div>
           <h2><a href="${post.link}" target="_blank">${post.title}</a></h2>
-          ${post.thumbnail ? `<img src="${post.thumbnail}" alt="${post.title}">` : ""}
+          ${imageUrl ? `<img src="${imageUrl}" alt="${post.title}">` : ""}
           <p>${post.description.split(" ").slice(0, 40).join(" ")}...</p>
         `;
 
